@@ -161,9 +161,16 @@ public class PlayerController : MonoBehaviour
         if (isGrounded == true && Input.GetButtonDown("Jump"))
         {
             velocity.y = initialJumpSpeed;
+
             multipleJump = true;
             numberOfJumps--;
             isGrounded = false;
+
+            if (numberOfJumps <= 0)
+            {
+                multipleJump = false;
+                numberOfJumps = totalJumps;
+            }
         }
 
         else if (multipleJump == true && Input.GetButtonDown("Jump"))
@@ -173,6 +180,12 @@ public class PlayerController : MonoBehaviour
                 velocity.y = initialJumpSpeed;
 
                 numberOfJumps--;
+            }
+
+            else if (numberOfJumps <= 0)
+            {
+                multipleJump = false;
+                numberOfJumps = totalJumps;
             }
         }
     }
