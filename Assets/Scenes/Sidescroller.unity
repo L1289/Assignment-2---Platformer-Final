@@ -1732,9 +1732,9 @@ MonoBehaviour:
   body: {fileID: 1433354316}
   currentState: 0
   previousState: 0
-  maxSpeed: 5
-  accelerationTime: 0.25
-  decelerationTime: 0.15
+  maxSpeed: 7
+  accelerationTime: 0.4
+  decelerationTime: 0.16
   apexHeight: 4
   apexTime: 0.5
   groundCheckOffset: 0.595

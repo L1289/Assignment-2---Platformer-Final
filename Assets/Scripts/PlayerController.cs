@@ -89,6 +89,8 @@ public class PlayerController : MonoBehaviour
                 break;
         }
 
+        //Running the QuickTurn Function in update
+        QuickTurn(playerInput);
         MovementUpdate(playerInput);
         JumpUpdate();
 
@@ -98,6 +100,26 @@ public class PlayerController : MonoBehaviour
             velocity.y = 0;
 
         body.velocity = velocity;
+    }
+
+    //QuickTurn Function to organize everything 
+    private void QuickTurn(Vector2 playerInput)
+    {
+        //Left QuickTurn
+        //If player decide to move left well moving in the right direction all speed will come full stop well changing the players direction to left
+        if (playerInput.x < 0 && currentDirection==PlayerDirection.right)
+        {
+            velocity.x = 0;
+            currentDirection = PlayerDirection.left;
+        }
+
+        //Right QuickTurn
+        //If player decide to move right well moving in the left direction all speed will come full stop well changing the players direction to right
+        else if (playerInput.x > 0 && currentDirection == PlayerDirection.left)
+        {
+            velocity.x = 0;
+            currentDirection = PlayerDirection.right;
+        }
     }
 
     private void MovementUpdate(Vector2 playerInput)
