@@ -28,7 +28,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Ground Checking")]
     public float groundCheckOffset = 0.5f;
-    public Vector2 groundCheckSize = new(0.4f, 0.1f);
+    public Vector2 groundCheckSize = new(0.5f, 0.1f);
     public LayerMask groundCheckMask;
 
     private float accelerationRate;

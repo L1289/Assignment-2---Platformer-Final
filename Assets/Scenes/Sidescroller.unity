@@ -1741,7 +1741,7 @@ MonoBehaviour:
   groundCheckSize: {x: 0.5, y: 0.1}
   groundCheckMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 8
   isDead: 0
 --- !u!4 &1433354315
 Transform:
