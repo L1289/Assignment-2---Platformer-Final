@@ -23,13 +23,14 @@ public class PlayerController : MonoBehaviour
     public float decelerationTime = 0.15f;
 
     [Header("Vertical")]
-    public float apexHeight = 3f;
+    public float apexHeight = 5f;
     public float apexTime = 0.5f;
-    public float numberOfJumps = 2f;
-    private float jumpCounter;
+    public float numberOfJumps = 2;
+    private float totalJumps;
+    private bool multipleJump = false;
 
     [Header("Ground Checking")]
-    public float groundCheckOffset = 0.5f;
+    public float groundCheckOffset = 0.6f;
     public Vector2 groundCheckSize = new(0.5f, 0.1f);
     public LayerMask groundCheckMask;
 
@@ -54,7 +55,7 @@ public class PlayerController : MonoBehaviour
         gravity = -2 * apexHeight / (apexTime * apexTime);
         initialJumpSpeed = 2 * apexHeight / apexTime;
 
-        jumpCounter = numberOfJumps;
+        totalJumps = numberOfJumps;
     }
 
     public void Update()
@@ -156,14 +157,24 @@ public class PlayerController : MonoBehaviour
 
     private void JumpUpdate()
     {
-
-        if (isGrounded && Input.GetButton("Jump"))
+        //initialJump
+        if (isGrounded == true && Input.GetButtonDown("Jump"))
         {
             velocity.y = initialJumpSpeed;
+            multipleJump = true;
+            numberOfJumps--;
             isGrounded = false;
-            jumpCounter = jumpCounter - 1;
         }
-        
+
+        else if (multipleJump == true && Input.GetButtonDown("Jump"))
+        {
+            if (numberOfJumps >= 1)
+            {
+                velocity.y = initialJumpSpeed;
+
+                numberOfJumps--;
+            }
+        }
     }
 
     private void CheckForGround()
