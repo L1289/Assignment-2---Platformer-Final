@@ -98,6 +98,7 @@ public class PlayerController : MonoBehaviour
         MovementUpdate(playerInput);
         JumpUpdate();
 
+
         if (!isGrounded)
             velocity.y += gravity * Time.deltaTime;
         else
@@ -162,17 +163,7 @@ public class PlayerController : MonoBehaviour
             isGrounded = false;
             jumpCounter = jumpCounter - 1;
         }
-
-        //Multi Jumping 
-        else if (!isGrounded && Input.GetButton("Jump"))
-        {
-            while (jumpCounter < numberOfJumps && jumpCounter > 0)
-            {
-                velocity.y = initialJumpSpeed;
-                jumpCounter = jumpCounter - 1;
-            }
-        }
-        */
+        
     }
 
     private void CheckForGround()
