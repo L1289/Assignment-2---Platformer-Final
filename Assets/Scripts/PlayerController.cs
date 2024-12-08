@@ -25,6 +25,8 @@ public class PlayerController : MonoBehaviour
     [Header("Vertical")]
     public float apexHeight = 3f;
     public float apexTime = 0.5f;
+    public float numberOfJumps = 2f;
+    private float jumpCounter;
 
     [Header("Ground Checking")]
     public float groundCheckOffset = 0.5f;
@@ -51,6 +53,8 @@ public class PlayerController : MonoBehaviour
 
         gravity = -2 * apexHeight / (apexTime * apexTime);
         initialJumpSpeed = 2 * apexHeight / apexTime;
+
+        jumpCounter = numberOfJumps;
     }
 
     public void Update()
@@ -151,11 +155,24 @@ public class PlayerController : MonoBehaviour
 
     private void JumpUpdate()
     {
+
         if (isGrounded && Input.GetButton("Jump"))
         {
             velocity.y = initialJumpSpeed;
             isGrounded = false;
+            jumpCounter = jumpCounter - 1;
         }
+
+        //Multi Jumping 
+        else if (!isGrounded && Input.GetButton("Jump"))
+        {
+            while (jumpCounter < numberOfJumps && jumpCounter > 0)
+            {
+                velocity.y = initialJumpSpeed;
+                jumpCounter = jumpCounter - 1;
+            }
+        }
+        */
     }
 
     private void CheckForGround()

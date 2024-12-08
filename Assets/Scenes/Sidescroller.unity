@@ -1735,8 +1735,9 @@ MonoBehaviour:
   maxSpeed: 7
   accelerationTime: 0.4
   decelerationTime: 0.16
-  apexHeight: 4
+  apexHeight: 3
   apexTime: 0.5
+  NumberOfJumps: 1
   groundCheckOffset: 0.595
   groundCheckSize: {x: 0.5, y: 0.1}
   groundCheckMask:
