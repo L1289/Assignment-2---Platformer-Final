@@ -76,18 +76,21 @@ public class PlayerController : MonoBehaviour
         Vector2 playerInput = new Vector2();
         playerInput.x = Input.GetAxisRaw("Horizontal");
 
+        //Change the Pull on a of a player between left and right like a magnet 
         switch (currentMagnetDirection)
         {
+            //Left
             case MagnetDirection.Left:
-                Physics2D.gravity = new Vector3(-9.8f, 0, 0);
+                Physics2D.gravity = new Vector3(-2f, 0, 0);
                 if (Input.GetKeyDown(KeyCode.E))
                 {
                     currentMagnetDirection = MagnetDirection.Right;
                     Debug.Log("Right");
                 }
                 break;
+            //Right
             case MagnetDirection.Right:
-                Physics2D.gravity = new Vector3(9.8f, 0, 0);
+                Physics2D.gravity = new Vector3(2f, 0, 0);
                 if (Input.GetKeyDown(KeyCode.E))
                 {
                     currentMagnetDirection = MagnetDirection.Left;
@@ -191,12 +194,14 @@ public class PlayerController : MonoBehaviour
         {
             velocity.y = initialJumpSpeed;
 
+            //Set up for multiple jumps after the initial one
             multipleJump = true;
             numberOfJumps--;
             isGrounded = false;
 
             if (numberOfJumps <= 0)
             {
+                //Restarts number of jumps after hitting ground and jumps are at 0
                 multipleJump = false;
                 numberOfJumps = totalJumps;
             }
@@ -204,6 +209,7 @@ public class PlayerController : MonoBehaviour
 
         else if (multipleJump == true && Input.GetButtonDown("Jump"))
         {
+            //Keeps repeating till all jumps are used up
             if (numberOfJumps >= 1)
             {
                 velocity.y = initialJumpSpeed;
@@ -213,6 +219,7 @@ public class PlayerController : MonoBehaviour
 
             else if (numberOfJumps <= 0)
             {
+                //Restarts number of jumps after all art used up well also cutting off this section to prevent a player form infinte jumping and having to land on the ground
                 multipleJump = false;
                 numberOfJumps = totalJumps;
             }
