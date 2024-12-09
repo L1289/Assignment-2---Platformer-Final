@@ -1,4 +1,6 @@
 using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
 
 public enum PlayerDirection
 {
@@ -10,12 +12,18 @@ public enum PlayerState
     idle, walking, jumping, dead
 }
 
+public enum MagnetDirection 
+{ 
+    Left, Right
+}
+
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private Rigidbody2D body;
     private PlayerDirection currentDirection = PlayerDirection.right;
     public PlayerState currentState = PlayerState.idle;
     public PlayerState previousState = PlayerState.idle;
+    public MagnetDirection currentMagnetDirection = MagnetDirection.Left;
 
     [Header("Horizontal")]
     public float maxSpeed = 5f;
@@ -45,6 +53,9 @@ public class PlayerController : MonoBehaviour
 
     private Vector2 velocity;
 
+    
+    
+
     public void Start()
     {
         body.gravityScale = 0;
@@ -54,8 +65,6 @@ public class PlayerController : MonoBehaviour
 
         gravity = -2 * apexHeight / (apexTime * apexTime);
         initialJumpSpeed = 2 * apexHeight / apexTime;
-
-        totalJumps = numberOfJumps;
     }
 
     public void Update()
@@ -67,12 +76,31 @@ public class PlayerController : MonoBehaviour
         Vector2 playerInput = new Vector2();
         playerInput.x = Input.GetAxisRaw("Horizontal");
 
+        switch (currentMagnetDirection)
+        {
+            case MagnetDirection.Left:
+                Physics2D.gravity = new Vector3(-9.8f, 0, 0);
+                if (Input.GetKeyDown(KeyCode.E))
+                {
+                    currentMagnetDirection = MagnetDirection.Right;
+                    Debug.Log("Right");
+                }
+                break;
+            case MagnetDirection.Right:
+                Physics2D.gravity = new Vector3(9.8f, 0, 0);
+                if (Input.GetKeyDown(KeyCode.E))
+                {
+                    currentMagnetDirection = MagnetDirection.Left;
+                    Debug.Log("Left");
+                }
+                break;
+        }
         if (isDead)
         {
             currentState = PlayerState.dead;
         }
 
-        switch(currentState)
+        switch (currentState)
         {
             case PlayerState.dead:
                 // do nothing - we ded.
@@ -107,6 +135,7 @@ public class PlayerController : MonoBehaviour
 
         body.velocity = velocity;
     }
+
 
     //QuickTurn Function to organize everything 
     private void QuickTurn(Vector2 playerInput)
