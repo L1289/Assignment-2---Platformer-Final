@@ -73,6 +73,7 @@ public class PlayerController : MonoBehaviour
         previousState = currentState;
 
         CheckForGround();
+        JumpUpdate();
 
         Vector2 playerInput = new Vector2();
         playerInput.x = Input.GetAxisRaw("Horizontal");
@@ -98,6 +99,7 @@ public class PlayerController : MonoBehaviour
                     Debug.Log("Left");
                 }
                 break;
+            //Off
             case MagnetDirection.Off:
                 Physics2D.gravity = new Vector3(0, 0, 0);
                 if (Input.GetKeyDown(KeyCode.E))
@@ -137,7 +139,7 @@ public class PlayerController : MonoBehaviour
         //Running the QuickTurn Function in update
         QuickTurn(playerInput);
         MovementUpdate(playerInput);
-        JumpUpdate();
+        
   
 
 
