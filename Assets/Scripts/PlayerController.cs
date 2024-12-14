@@ -14,7 +14,7 @@ public enum PlayerState
 
 public enum MagnetDirection 
 { 
-    Left, Right
+    Left, Right, Off
 }
 
 public class PlayerController : MonoBehaviour
@@ -23,7 +23,7 @@ public class PlayerController : MonoBehaviour
     private PlayerDirection currentDirection = PlayerDirection.right;
     public PlayerState currentState = PlayerState.idle;
     public PlayerState previousState = PlayerState.idle;
-    public MagnetDirection currentMagnetDirection = MagnetDirection.Left;
+    public MagnetDirection currentMagnetDirection = MagnetDirection.Off;
 
     [Header("Horizontal")]
     public float maxSpeed = 5f;
@@ -67,34 +67,6 @@ public class PlayerController : MonoBehaviour
         initialJumpSpeed = 2 * apexHeight / apexTime;
     }
 
-    public void FixedUpdate()
-    {
-        JumpUpdate();
-
-        //Change the Pull on a of a player between left and right like a magnet 
-        switch (currentMagnetDirection)
-        {
-            //Left
-            case MagnetDirection.Left:
-                Physics2D.gravity = new Vector3(-2f, 0, 0);
-                if (Input.GetKeyDown(KeyCode.E))
-                {
-                    currentMagnetDirection = MagnetDirection.Right;
-                    Debug.Log("Right");
-                }
-                break;
-            //Right
-            case MagnetDirection.Right:
-                Physics2D.gravity = new Vector3(2f, 0, 0);
-                if (Input.GetKeyDown(KeyCode.E))
-                {
-                    currentMagnetDirection = MagnetDirection.Left;
-                    Debug.Log("Left");
-                }
-                break;
-        }
-
-    }
 
     public void Update()
     {
@@ -105,6 +77,36 @@ public class PlayerController : MonoBehaviour
         Vector2 playerInput = new Vector2();
         playerInput.x = Input.GetAxisRaw("Horizontal");
 
+        //Change the Pull on a of a player between left and right like a magnet 
+        switch (currentMagnetDirection)
+        {
+            //Left
+            case MagnetDirection.Left:
+                Physics2D.gravity = new Vector3(-20f, 0, 0);
+                if (Input.GetKeyDown(KeyCode.E))
+                {
+                    currentMagnetDirection = MagnetDirection.Right;
+                    Debug.Log("Right");
+                }
+                break;
+            //Right
+            case MagnetDirection.Right:
+                Physics2D.gravity = new Vector3(20f, 0, 0);
+                if (Input.GetKeyDown(KeyCode.E))
+                {
+                    currentMagnetDirection = MagnetDirection.Off;
+                    Debug.Log("Left");
+                }
+                break;
+            case MagnetDirection.Off:
+                Physics2D.gravity = new Vector3(0, 0, 0);
+                if (Input.GetKeyDown(KeyCode.E))
+                {
+                    currentMagnetDirection = MagnetDirection.Left;
+                    Debug.Log("Off");
+                }
+                break;
+        }
         if (isDead)
         {
             currentState = PlayerState.dead;
@@ -135,6 +137,7 @@ public class PlayerController : MonoBehaviour
         //Running the QuickTurn Function in update
         QuickTurn(playerInput);
         MovementUpdate(playerInput);
+        JumpUpdate();
   
 
 
