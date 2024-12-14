@@ -67,14 +67,9 @@ public class PlayerController : MonoBehaviour
         initialJumpSpeed = 2 * apexHeight / apexTime;
     }
 
-    public void Update()
+    public void FixedUpdate()
     {
-        previousState = currentState;
-
-        CheckForGround();
-
-        Vector2 playerInput = new Vector2();
-        playerInput.x = Input.GetAxisRaw("Horizontal");
+        JumpUpdate();
 
         //Change the Pull on a of a player between left and right like a magnet 
         switch (currentMagnetDirection)
@@ -98,6 +93,18 @@ public class PlayerController : MonoBehaviour
                 }
                 break;
         }
+
+    }
+
+    public void Update()
+    {
+        previousState = currentState;
+
+        CheckForGround();
+
+        Vector2 playerInput = new Vector2();
+        playerInput.x = Input.GetAxisRaw("Horizontal");
+
         if (isDead)
         {
             currentState = PlayerState.dead;
@@ -128,7 +135,7 @@ public class PlayerController : MonoBehaviour
         //Running the QuickTurn Function in update
         QuickTurn(playerInput);
         MovementUpdate(playerInput);
-        JumpUpdate();
+  
 
 
         if (!isGrounded)
