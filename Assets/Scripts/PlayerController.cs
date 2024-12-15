@@ -138,8 +138,7 @@ public class PlayerController : MonoBehaviour
 
         //Running the QuickTurn Function in update
         QuickTurn(playerInput);
-        MovementUpdate(playerInput);
-        
+        MovementUpdate(playerInput);   
   
 
 
